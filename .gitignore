@@ -1,3 +1,4 @@
 vendor/
 index
 api.sqlite
+app.log

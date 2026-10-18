@@ -1,0 +1,23 @@
+{
+    "name": "etcix/my-php-project",
+    "description": "fucker fucker init a basic php project",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Etcix\\MyPhpProject\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "fucker fucker",
+            "email": "urmama@myroom.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^3.12"
+    },
+    "require-dev": {
+        "swoole/typephp": "^0.9.5"
+    }
+}

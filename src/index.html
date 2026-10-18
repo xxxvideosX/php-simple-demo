@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- src/index.html -->
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>API 测试</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }
+        input, button { padding: 6px 10px; margin: 4px; }
+        ul { list-style: none; padding: 0; }
+        li { padding: 8px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+        .del { color: red; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>Items 测试</h2>
+    <input id="name" placeholder="输入名称">
+    <button onclick="addItem()">添加</button>
+    <ul id="list"></ul>
+
+    <script>
+        const API = '/index.php/items'
+
+        async function loadItems() {
+            const res = await fetch(API);
+            const items = await res.json();
+            const list = document.getElementById('list');
+            list.innerHTML = '';
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span>#${item.id} ${item.name}</span>
+                    <span class="del" onclick="delItem(${item.id})">删除</span>`;
+                list.appendChild(li);
+            });
+        }
+
+        async function addItem() {
+            const name = document.getElementById('name').value.trim();
+            if (!name) return;
+            await fetch(API, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name })
+            });
+            document.getElementById('name').value = '';
+            loadItems();
+        }
+
+        async function delItem(id) {
+            await fetch(`${API}/${id}`, { method: 'DELETE' });
+            loadItems();
+        }
+
+        loadItems();
+    </script>
+</body>
+</html>
